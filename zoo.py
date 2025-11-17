@@ -7,7 +7,7 @@ Username: patdy092
 This is my own work as defined by the University's Academic Integrity Policy.
 """
 from animal import Animal
-from health_record import HealthRecord
+from health_system import HealthRecord
 from enclosure import Enclosure
 from staff import Staff
 

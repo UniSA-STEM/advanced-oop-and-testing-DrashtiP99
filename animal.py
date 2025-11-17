@@ -22,6 +22,7 @@ class Animal(ABC):
         self._diet = diet
         self._health_record = []
         self._treatment_status = False
+        self._health_manager = None
 
     #define getter methods to access private attributes
     def get_name(self):
@@ -126,6 +127,112 @@ class Reptile(Animal):
 
     def make_sound(self):
         return f"{self._name} hisses!"
+
+
+#subclasses for specific animals of each species
+class Lion(Animal):
+    def __init__(self, name, age, pride_member = True):
+        super().__init__(
+            name = name,
+            species = "Lion",
+            age = age,
+            diet = "Carnivore: 5-7kg of raw meat daily",
+        )
+        self._pride_member = pride_member
+
+    #override make sound method for lion subclass
+    def make_sound(self):
+        return f"{self._name} roars!"
+
+    def get_animal_type(self):
+        return "Lion"
+
+    def is_pride_member(self):
+        return self._pride_member
+
+    def hunt(self):
+        """Lions are apex predators so they hunt"""
+        if self._pride_member:
+            return f"{self._name} hunts with their pride"
+        return f"{self._name} hunts alone"
+
+class Python(Reptile):
+    """Represents a Python as a reptile species
+        unique attribute is length in meters set to default of 3.0"""
+    def __init__(self, name, age, length):
+        super().__init__(
+            name=name,
+            species="Australian Scrub",
+            age=age,
+            diet = "Carnivore: small mammals, lizards and bird every 1-2 weeks",
+            venomous=False)
+        self._length = length
+
+    #unique getter for this subclass
+    def get_length(self):
+        return self._length
+    #override abstract methods for this subclass
+    def make_sound(self):
+        return f"{self._name} hisses!"
+
+    def get_animal_type(self):
+        return "Python"
+
+    def kill_prey(self):
+        """Pythons kill prey by constriction"""
+        return f"{self._name} kills prey by constriction"
+
+    def shed_skin(self):
+        return f"{self._name} sheds their skin"
+
+    def __str__(self):
+        """String representation of python and its characteristics"""
+        return f"{super().__str__()} with Length = {self.length}"
+
+
+    class Parrot(Bird):
+        """Parrot subclass with unique attributes of colour and vocab"""
+        def __init__(self, name, age, colour="Rainbow"):
+            super().__init__(
+                name=name,
+                species = "Scarlet Macaw",
+                age=age,
+                diet = "Omnivore: 100-150g of plants, seeds, nuts, and insects",
+                can_fly = True
+            )
+            self._colour = colour
+            self._vocabulary = []
+
+        def make_sound(self):
+            if self._vocabulary:
+                word = self._vocabulary[0]
+                return f"Parrot {self._name} squawks {word}!"
+            else:
+                return f"Parrot {self._name} SQUAWKS!"
+
+        def get_animal_type(self):
+            return "Parrot"
+
+        def get_colour(self):
+            return self._colour
+
+        def get_vocabulary(self):
+            return self._vocabulary
+
+        def teach_word(self, word):
+            """Teach the parrot a new word"""
+            if word not in self._vocabulary:
+                self._vocabulary.append(word)
+                return f"{self._name} has learned to say {word}"
+            return f"{self._name} already knows {word}"
+
+        def __str__(self):
+            """String representation of parrot and its characteristics"""
+            vocab_count = len(self._vocabulary)
+            return f"{super().__str__()} - colour is {self._colour} and it knows {vocab_count} words"
+
+
+
 
 
 
